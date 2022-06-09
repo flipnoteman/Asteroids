@@ -2,10 +2,12 @@ mod player;
 mod particles;
 mod debug;
 mod projectile;
+mod asteroids;
 
 use bevy::prelude::*;
 use bevy::render::camera::ScalingMode;
 use bevy_inspector_egui::{WorldInspectorPlugin, Inspectable};
+use crate::asteroids::AsteroidPlugin;
 use crate::debug::DebugPlugin;
 use crate::player::PlayerPlugin;
 use crate::projectile::ProjectilePlugin;
@@ -31,6 +33,7 @@ fn main() {
         .add_plugin(DebugPlugin)
         .add_plugin(PlayerPlugin)
         .add_plugin(ProjectilePlugin)
+        .add_plugin(AsteroidPlugin)
         .add_startup_system(spawn_camera)
         .run();
 }
