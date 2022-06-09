@@ -1,6 +1,7 @@
 mod player;
 mod particles;
 mod debug;
+mod projectile;
 
 use bevy::prelude::*;
 use bevy::render::camera::ScalingMode;
