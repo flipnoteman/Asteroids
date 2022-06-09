@@ -52,10 +52,10 @@ fn move_player (
     let (mut player, mut transform) = query.single_mut();
 
     if input.pressed(KeyCode::Right) {
-        transform.rotation *= (Quat::from_rotation_z(MAX_SPEED * TILE_SIZE * -time.delta_seconds()));
+        transform.rotation *= (Quat::from_rotation_z(2.0 * MAX_SPEED * TILE_SIZE * -time.delta_seconds()));
     }
     if input.pressed(KeyCode::Left) {
-        transform.rotation *= (Quat::from_rotation_z(MAX_SPEED * TILE_SIZE * time.delta_seconds()));
+        transform.rotation *= (Quat::from_rotation_z(2.0 * MAX_SPEED * TILE_SIZE * time.delta_seconds()));
     }
     if input.pressed(KeyCode::Up) {
         player.velocity += transform.rotation * Vec3::new(0.5, 0.0, 0.0);
@@ -73,7 +73,7 @@ fn spawn_player(mut commands: Commands, asset_server: Res<AssetServer>) {
     commands.spawn_bundle(SpriteBundle {
         texture: asset_server.load("ships/ship_2.png"),
         sprite: Sprite {
-            custom_size: Some(Vec2::new(0.1, 0.1)),
+            custom_size: Some(Vec2::new(1.0 * TILE_SIZE, 1.0 * TILE_SIZE)),
             ..default()
         },
         transform: Transform {
