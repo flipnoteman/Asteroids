@@ -1,3 +1,4 @@
+use std::cmp::min;
 use bevy::asset::Asset;
 use bevy::prelude::*;
 use bevy::render::camera::RenderTarget::Window;
@@ -57,29 +58,13 @@ fn move_player (
         transform.rotation *= (Quat::from_rotation_z(MAX_SPEED * TILE_SIZE * time.delta_seconds()));
     }
     if input.pressed(KeyCode::Up) {
-        let dir_array = Quat::to_euler(transform.rotation, EulerRot::XYZ);
-        let dir_x_cos = f32::cos(dir_array.2);
-        let dir_y_sin = f32::sin(dir_array.2);
-
-        player.velocity.x += dir_x_cos * player.speed;
-        player.velocity.y += dir_y_sin * player.speed;
-
-        if player.velocity.x > MAX_SPEED {
-            player.velocity.x = MAX_SPEED;
-        }
-        if player.velocity.x < -MAX_SPEED {
-            player.velocity.x = -MAX_SPEED;
-        }
-        if player.velocity.y  > MAX_SPEED {
-            player.velocity.y = MAX_SPEED;
-        }
-        if player.velocity.y < -MAX_SPEED {
-            player.velocity.y = -MAX_SPEED;
-        }
-
+        player.velocity += transform.rotation * Vec3::new(0.5, 0.0, 0.0);
+        player.velocity = Vec3::clamp(
+            player.velocity,
+            Vec3::new(-MAX_SPEED, -MAX_SPEED, 0.0),
+            Vec3::new(MAX_SPEED, MAX_SPEED, 0.0)
+        );
     }
-
-
     transform.translation += player.velocity * TILE_SIZE * time.delta_seconds();
 }
 
