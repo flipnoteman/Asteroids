@@ -4,7 +4,7 @@ use rand;
 use rand::{Rng, thread_rng};
 
 use crate::{RESOLUTION, TILE_SIZE};
-const RADIUS: f32 = 4.0 * TILE_SIZE;
+pub const RADIUS: f32 = 4.0 * TILE_SIZE;
 const ASTEROID_MAX_SPEED: f32 = 6.0;
 
 enum SpawnSide {
@@ -102,18 +102,26 @@ fn spawn_asteroid(mut commands: Commands, asset_server: Res<AssetServer>) {
     let mut rng = thread_rng();
     let asteroid_speed: f32 = rng.gen_range(-ASTEROID_MAX_SPEED..ASTEROID_MAX_SPEED);
     let random_location = outside_bounds_vector(gen_side());
+    let random_asteroid: u16 = rng.gen_range(1..=3);
+    let start_asteroid = match random_asteroid {
+        1 => "asteroids/larg_asteroid_1.png",
+        2 => "asteroids/larg_asteroid_2.png",
+        3 => "asteroids/larg_asteroid_3.png",
+        _ => "asteroids/larg_asteroid_1.png"
+    };
     commands.spawn_bundle(SpriteBundle {
         sprite: Sprite {
             custom_size: Some(Vec2::new(RADIUS, RADIUS)),
             ..default()
         },
-        texture: asset_server.load("asteroids/larg_asteroid_1.png"),
+        texture: asset_server.load(start_asteroid),
         transform: Transform::from_xyz(random_location.x, random_location.y, 0.0),
         ..default()
     })
         .insert(
             Asteroid {
-                velocity: Vec3::new(gen_val(-ASTEROID_MAX_SPEED, ASTEROID_MAX_SPEED), gen_val(-ASTEROID_MAX_SPEED, ASTEROID_MAX_SPEED),
+                velocity: Vec3::new(gen_val(-ASTEROID_MAX_SPEED, ASTEROID_MAX_SPEED),
+                                    gen_val(-ASTEROID_MAX_SPEED, ASTEROID_MAX_SPEED),
                                     0.0)
             }
         );

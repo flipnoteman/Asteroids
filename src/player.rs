@@ -7,6 +7,7 @@ use bevy::transform;
 use bevy::window::WindowId;
 use bevy_inspector_egui::Inspectable;
 use crate::{RESOLUTION, TILE_SIZE};
+use crate::asteroids::{Asteroid, RADIUS};
 
 const PLAYER_VELOCITY_BOUND: f32 = 1.0;
 const MAX_SPEED: f32 = 15.0;
@@ -25,9 +26,30 @@ impl Plugin for PlayerPlugin {
         app
             .add_startup_system(spawn_player)
             .add_system(move_player)
-            .add_system(check_if_out_of_bounds.before(move_player));
+            .add_system(check_if_out_of_bounds.before(move_player))
+            .add_system(check_collision_with_asteroid.before(check_if_out_of_bounds));
     }
 }
+
+fn check_collision_with_asteroid(asteroid_query: Query<(&Asteroid, &Transform)>, player_query: Query<(&Player, &Transform)>){
+    let (_player, transform) = player_query.single();
+    let mut distance = 150000.0f32;
+
+
+    for (_asteroid, ast_trans) in asteroid_query.iter() {
+        let x = transform.translation.x - ast_trans.translation.x;
+        let y = transform.translation.y - ast_trans.translation.y;
+        let x_square = x.powf(2.0);
+        let y_square = y.powf(2.0);
+        distance = (x_square.abs() + y_square.abs()).sqrt();
+        println!("{}", distance);
+        if distance < RADIUS {
+            println!("True");
+        }
+    }
+    println!("False");
+}
+
 
 fn check_if_out_of_bounds(mut player_query: Query<(&Player, &mut Transform)>) {
     let (player, mut transform) = player_query.single_mut();
