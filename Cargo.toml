@@ -12,6 +12,6 @@ opt-level = 3
 
 [dependencies]
 bevy = { version = "0.7.0", features = ["dynamic"] }
-bevy_prototype_lyon = "0.5.0"
+bevy_rapier2d = "0.14.1"
 rand = "0.8.5"
 bevy-inspector-egui = "0.10.0"

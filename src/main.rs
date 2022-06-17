@@ -1,22 +1,21 @@
-mod player;
-mod particles;
-mod debug;
-mod projectile;
 mod asteroids;
+mod debug;
+mod particles;
+mod player;
+mod projectile;
 
-use bevy::prelude::*;
-use bevy::render::camera::ScalingMode;
-use bevy_inspector_egui::{WorldInspectorPlugin, Inspectable};
 use crate::asteroids::AsteroidPlugin;
 use crate::debug::DebugPlugin;
 use crate::player::PlayerPlugin;
 use crate::projectile::ProjectilePlugin;
+use bevy::prelude::*;
+use bevy::render::camera::ScalingMode;
+use bevy_inspector_egui::{Inspectable, WorldInspectorPlugin};
 
 pub const RESOLUTION: f32 = 16.0 / 9.0;
 pub const TILE_SIZE: f32 = 0.1;
 pub const HEIGHT: f32 = 900.0;
 const CLEAR: Color = Color::BLACK;
-
 
 fn main() {
     App::new()
@@ -32,8 +31,8 @@ fn main() {
         .add_plugins(DefaultPlugins)
         .add_plugin(DebugPlugin)
         .add_plugin(PlayerPlugin)
-        .add_plugin(ProjectilePlugin)
         .add_plugin(AsteroidPlugin)
+        .add_plugin(ProjectilePlugin)
         .add_startup_system(spawn_camera)
         .run();
 }

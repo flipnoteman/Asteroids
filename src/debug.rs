@@ -1,22 +1,20 @@
 use bevy::prelude::*;
-use bevy_inspector_egui::{WorldInspectorPlugin, WorldInspectorParams, RegisterInspectable};
+use bevy_inspector_egui::{RegisterInspectable, WorldInspectorParams, WorldInspectorPlugin};
 
 use crate::player::Player;
-
 
 pub struct DebugPlugin;
 
 impl Plugin for DebugPlugin {
     fn build(&self, app: &mut App) {
         if cfg!(debug_assertions) {
-            app
-                .insert_resource(WorldInspectorParams {
-                    enabled: false,
-                    highlight_changes: true,
-                    ..default()
-                })
-                .add_plugin(WorldInspectorPlugin::new())
-                .add_system(toggle_debugger);
+            app.insert_resource(WorldInspectorParams {
+                enabled: false,
+                highlight_changes: true,
+                ..default()
+            })
+            .add_plugin(WorldInspectorPlugin::new())
+            .add_system(toggle_debugger);
             app.register_inspectable::<Player>();
         }
     }

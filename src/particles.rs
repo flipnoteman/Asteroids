@@ -7,9 +7,9 @@ struct ParticleSize {
 }
 
 #[derive(Component, Clone, Copy)]
-struct ParticleColor{
+struct ParticleColor {
     start: Color,
-    end: Color
+    end: Color,
 }
 
 #[derive(Component, Clone, Copy)]
@@ -20,7 +20,7 @@ struct ParticleVelocity {
 
 #[derive(Component)]
 struct Particle {
-    lifetime: Timer
+    lifetime: Timer,
 }
 
 #[derive(Component)]
@@ -34,15 +34,13 @@ struct ParticleSpawner {
     particle_lifetime: f32,
     particle_size: Option<ParticleSize>,
     particle_color: Option<ParticleColor>,
-    particle_velocity: Option<ParticleVelocity>
+    particle_velocity: Option<ParticleVelocity>,
 }
 
 struct ParticlePlugin;
 
 impl Plugin for ParticlePlugin {
-    fn build(&self, app: &mut App) {
-
-    }
+    fn build(&self, app: &mut App) {}
 }
 
 // Interpolates two given values with a given multiplier
@@ -61,10 +59,8 @@ fn lerp_color(a: Color, b: Color, t: f32) -> Color {
         lerp(a.r(), b.r(), t),
         lerp(a.g(), b.g(), t),
         lerp(a.b(), b.b(), t),
-        lerp(a.a(), b.a(), t)
+        lerp(a.a(), b.a(), t),
     )
 }
 
-fn spawn_particle() {
-
-}
+fn spawn_particle() {}
