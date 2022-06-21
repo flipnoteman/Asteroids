@@ -138,5 +138,13 @@ fn spawn_asteroid(mut commands: Commands, asset_server: Res<AssetServer>) {
                 gen_val(-ASTEROID_MAX_SPEED, ASTEROID_MAX_SPEED),
                 0.0,
             ),
-        });
+        })
+        .insert(RigidBody::Dynamic)
+        .insert(Velocity {
+            linvel: Vec2::new(1.0 * RESOLUTION * TILE_SIZE, 2.0 * RESOLUTION * TILE_SIZE),
+            angvel: 0.2
+        })
+        .insert(GravityScale(0.1))
+        .insert(Sleeping::disabled())
+        .insert(Ccd::enabled());
 }

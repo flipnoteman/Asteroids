@@ -8,6 +8,8 @@ use bevy::transform;
 use bevy::window::WindowId;
 use bevy_inspector_egui::Inspectable;
 use std::cmp::min;
+use bevy_rapier2d::dynamics::Ccd;
+use bevy_rapier2d::prelude::*;
 
 const PLAYER_VELOCITY_BOUND: f32 = 1.0;
 const MAX_SPEED: f32 = 15.0;
@@ -109,5 +111,8 @@ fn spawn_player(mut commands: Commands, asset_server: Res<AssetServer>) {
         .insert(Player {
             speed: 0.5,
             velocity: Vec3::new(1.0, 1.0, 0.0),
-        });
+        })
+        .insert(RigidBody::Dynamic)
+        .insert(Collider::)
+        .insert(Ccd::enabled());
 }
